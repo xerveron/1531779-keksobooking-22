@@ -57,7 +57,7 @@ const CHECKS = [
   '14:00',
 ];
 
-const createFakeArray = () => {
+const createFakeData = () => {
   const location = {
     x: getRandomFloatNumber(35.65,35.7,5),
     y: getRandomFloatNumber(139.7,139.8,5),
@@ -86,3 +86,6 @@ const createFakeArray = () => {
     },
   }
 };
+
+const fakeArray = new Array(10).fill(null).map(() => createFakeData());
+
