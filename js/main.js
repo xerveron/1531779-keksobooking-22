@@ -86,5 +86,3 @@ const createFakeArray = () => {
     },
   }
 };
-const a = createFakeArray();
-console.log (a);
