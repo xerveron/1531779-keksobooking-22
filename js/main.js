@@ -87,5 +87,5 @@ const createFakeData = () => {
   }
 };
 
-const fakeArray = new Array(10).fill(null).map(() => createFakeData());
+const fakeDatas = new Array(10).fill(null).map(() => createFakeData());
 
