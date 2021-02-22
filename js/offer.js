@@ -13,10 +13,10 @@ const offerPopUp = (appendTo) => {
     offerElement.querySelector('.popup__title').textContent = fakeElement.offer.title;
     offerElement.querySelector('.popup__text--address').textContent = fakeElement.offer.address;
     offerElement.querySelector('.popup__text--price').textContent = fakeElement.offer.price + ' ₽/ночь';
-    if (fakeElement.offer.type==='flat') offerElement.querySelector('.popup__type').textContent = 'Квартира';
-    if (fakeElement.offer.type==='bungalow') offerElement.querySelector('.popup__type').textContent = 'Бунгало';
-    if (fakeElement.offer.type==='house') offerElement.querySelector('.popup__type').textContent = 'Дом';
-    if (fakeElement.offer.type==='palace') offerElement.querySelector('.popup__type').textContent = 'Дворец';
+    offerElement.querySelector('.popup__type').textContent = (fakeElement.offer.type==='flat') ? 'Квартира':
+      (fakeElement.offer.type==='bungalow') ? 'Бунгало':
+        (fakeElement.offer.type==='house') ? 'Дом':
+          'Дворец';
     offerElement.querySelector('.popup__text--capacity').textContent = fakeElement.offer.rooms + ' комнаты для ' + fakeElement.offer.guests + ' гостей';
     offerElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + fakeElement.offer.checkin + ', выезд до ' + fakeElement.offer.checkout;
     if (fakeElement.offer.features === undefined || fakeElement.offer.photo.features == 0) {
