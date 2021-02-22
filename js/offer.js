@@ -39,4 +39,4 @@ const offerPopUp = (appendTo) => {
     appendTo.appendChild(offerElement);
   })}
 
-  export {offerPopUp};
+export {offerPopUp};
