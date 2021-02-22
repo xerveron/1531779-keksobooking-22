@@ -57,14 +57,15 @@ const createFakeData = () => {
     x: getRandomFloatNumber(35.65, 35.7, 5),
     y: getRandomFloatNumber(139.7, 139.8, 5),
   };
+  const typeOfOffer = TYPES[getRandomNumber(0, TYPES.length - 1)];
   return {
     author: { avatar: 'img/avatars/user0' + getRandomNumber(1, 8) + '.png' },
     location,
     offer: {
-      title: ADJS[getRandomNumber(0, ADJS.length - 1)] + ' ' + TYPES[getRandomNumber(0, TYPES.length - 1)],
+      title: ADJS[getRandomNumber(0, ADJS.length - 1)] + ' ' + typeOfOffer,
       address: location.x + ' ' + location.y,
       price: getRandomNumber(0, 100000000),
-      type: TYPES[getRandomNumber(0, TYPES.length - 1)],
+      type: typeOfOffer,
       rooms: getRandomNumber(0, 100),
       guests: getRandomNumber(0, 100),
       checkout: CHECKS[getRandomNumber(0, CHECKS.length - 1)],
