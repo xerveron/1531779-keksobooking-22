@@ -1,5 +1,8 @@
 import {dropDownChange} from './util.js';
 
+const Price [
+  
+]
 
 const changePriceOfType = (select, input) => {
     select.addEventListener('change', () => {
