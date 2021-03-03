@@ -1,4 +1,5 @@
 import {dropDownChange} from './util.js';
+<<<<<<< HEAD
 import {Types} from './data.js';
 
 const Price = [
@@ -18,6 +19,20 @@ const changePriceOfType = (select, input) => {
       dropDownChange(input, Price[2]);
     } else {
       dropDownChange(input, Price[3]);
+=======
+
+
+const changePriceOfType = (select, input) => {
+    select.addEventListener('change', () => {
+    if (select.value === 'bungalow') {
+      dropDownChange(input, '2000');
+    } else if (select.value === 'flat') {
+      dropDownChange(input, '5000');
+    } else if (select.value === 'house') {
+      dropDownChange(input, '10000');
+    } else {
+      dropDownChange(input, '50000');
+>>>>>>> 9437ad9514685f773689209d84ad518df04fecb9
     }
   });
 };

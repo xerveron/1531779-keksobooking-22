@@ -12,8 +12,14 @@ const getRandomFloatNumber = (from, to, decimals) => {
 };
 
 const dropDownChange = (inputElement, value) => {
+<<<<<<< HEAD
   inputElement.min=value;
   inputElement.placeholder=value;
 };
+=======
+    inputElement.min=value;
+    inputElement.placeholder=value;
+  };
+>>>>>>> 9437ad9514685f773689209d84ad518df04fecb9
 
 export { getRandomFloatNumber, getRandomNumber, getRandomForReduce, dropDownChange};
