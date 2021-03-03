@@ -1,3 +1,9 @@
-import {createFakeData} from './data.js';
 
-const fakeData = new Array(10).fill(null).map(() => createFakeData());
+import {offerPopUp} from './offer.js';
+
+const offerList = document.querySelector('#map-canvas');
+
+const fragment = document.createDocumentFragment();
+
+offerPopUp(fragment);
+offerList.appendChild(fragment.firstChild);

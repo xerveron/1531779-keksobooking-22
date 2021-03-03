@@ -1,13 +1,13 @@
 import {getRandomFloatNumber, getRandomNumber, getRandomForReduce} from './util.js';
 
-const TYPES = [
+const Types = [
   'palace',
   'flat',
   'house',
   'bungalow',
 ];
 
-const ADJS = [
+const Adjs = [
   'Nice',
   'Great',
   'Beautiful',
@@ -20,7 +20,7 @@ const ADJS = [
   'Usual',
 ];
 
-const PURPOSES = [
+const Purposes = [
   'living',
   'working',
   'swimming in ocean',
@@ -31,7 +31,7 @@ const PURPOSES = [
   'solitude',
 ];
 
-const FEATURES = [
+const Features = [
   'wifi',
   'dishwasher',
   'parking',
@@ -40,13 +40,13 @@ const FEATURES = [
   'conditioner',
 ];
 
-const PHOTOS = [
+const Photos = [
   'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg',
 ];
 
-const CHECKS = [
+const Checks = [
   '12:00',
   '13:00',
   '14:00',
@@ -57,23 +57,24 @@ const createFakeData = () => {
     x: getRandomFloatNumber(35.65, 35.7, 5),
     y: getRandomFloatNumber(139.7, 139.8, 5),
   };
+  const typeOfOffer = Types[getRandomNumber(0, Types.length - 1)];
   return {
     author: { avatar: 'img/avatars/user0' + getRandomNumber(1, 8) + '.png' },
     location,
     offer: {
-      title: ADJS[getRandomNumber(0, ADJS.length - 1)] + ' ' + TYPES[getRandomNumber(0, TYPES.length - 1)],
+      title: Adjs[getRandomNumber(0, Adjs.length - 1)] + ' ' + typeOfOffer,
       address: location.x + ' ' + location.y,
       price: getRandomNumber(0, 100000000),
-      type: TYPES[getRandomNumber(0, TYPES.length - 1)],
+      type: typeOfOffer,
       rooms: getRandomNumber(0, 100),
       guests: getRandomNumber(0, 100),
-      checkout: CHECKS[getRandomNumber(0, CHECKS.length - 1)],
-      checkin: CHECKS[getRandomNumber(0, CHECKS.length - 1)],
-      description: ADJS[getRandomNumber(0, ADJS.length - 1)] + ' ' + TYPES[getRandomNumber(0, TYPES.length - 1)] + ' for ' + PURPOSES[getRandomNumber(0, PURPOSES.length - 1)],
-      photo: PHOTOS.reduce(getRandomForReduce, []),
-      features: FEATURES.reduce(getRandomForReduce, []),
+      checkout: Checks[getRandomNumber(0, Checks.length - 1)],
+      checkin: Checks[getRandomNumber(0, Checks.length - 1)],
+      description: Adjs[getRandomNumber(0, Adjs.length - 1)] + ' ' + Types[getRandomNumber(0, Types.length - 1)] + ' for ' + Purposes[getRandomNumber(0, Purposes.length - 1)],
+      photo: Photos.reduce(getRandomForReduce, []),
+      features: Features.reduce(getRandomForReduce, []),
     },
   }
 };
 
-export { createFakeData };
+export { createFakeData, Types};
