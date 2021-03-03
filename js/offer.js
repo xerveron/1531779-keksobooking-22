@@ -1,10 +1,17 @@
-import {createFakeData} from './data.js';
+import {createFakeData, Types} from './data.js';
 
 const fakeData = new Array(10).fill(null).map(() => createFakeData());
 
 const offerTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
+
+const Typesrussian = [
+  'Дворец',
+  'Квартира',
+  'Дом',
+  'Бунгало',
+]
 
 
 const offerPopUp = (appendTo) => {
@@ -13,10 +20,10 @@ const offerPopUp = (appendTo) => {
     offerElement.querySelector('.popup__title').textContent = fakeElement.offer.title;
     offerElement.querySelector('.popup__text--address').textContent = fakeElement.offer.address;
     offerElement.querySelector('.popup__text--price').textContent = fakeElement.offer.price + ' ₽/ночь';
-    offerElement.querySelector('.popup__type').textContent = (fakeElement.offer.type==='flat') ? 'Квартира':
-      (fakeElement.offer.type==='bungalow') ? 'Бунгало':
-        (fakeElement.offer.type==='house') ? 'Дом':
-          'Дворец';
+    offerElement.querySelector('.popup__type').textContent = (fakeElement.offer.type===Types[0]) ? Typesrussian[0]:
+      (fakeElement.offer.type===Types[1]) ? Typesrussian[1]:
+        (fakeElement.offer.type===Types[2]) ? Typesrussian[2]:
+        Typesrussian[3];
     offerElement.querySelector('.popup__text--capacity').textContent = fakeElement.offer.rooms + ' комнаты для ' + fakeElement.offer.guests + ' гостей';
     offerElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + fakeElement.offer.checkin + ', выезд до ' + fakeElement.offer.checkout;
     if (fakeElement.offer.features === undefined || fakeElement.offer.photo.features == 0) {

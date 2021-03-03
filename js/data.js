@@ -77,4 +77,4 @@ const createFakeData = () => {
   }
 };
 
-export { createFakeData };
+export { createFakeData, Types};
