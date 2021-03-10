@@ -1,16 +1,6 @@
 
-import {offerPopUp} from './offer.js';
-import {changePriceOfType, eventBothChange} from './form.js';
+import {changePriceOfType, eventBothChange, forceMaxPrice, titleMinMax} from './form.js';
 
-/* const offerList = document.querySelector('#map-canvas');
-
-const fragment = document.createDocumentFragment();
-
-offerPopUp(fragment); */
-//offerList.appendChild(fragment.firstChild);
-
-
-//inactive
 const form = document.querySelector('.ad-form');
 const mapFilter = document.querySelector('.map__filters');
 
@@ -26,7 +16,20 @@ const inputPrice = document.querySelector('#price');
 
 changePriceOfType(dropDownType, inputPrice);
 
-const timeIn = document.querySelector('#timein')
-const timeOut = document.querySelector('#timeout')
+const timeIn = document.querySelector('#timein');
+const timeOut = document.querySelector('#timeout');
 
 eventBothChange (timeIn,timeOut);
+
+const numOfGuests = document.querySelector('#capacity');
+const numOfRooms = document.querySelector('#room_number');
+
+eventBothChange (numOfGuests,numOfRooms);
+
+const maxPriceField = document.querySelector('#price');
+
+forceMaxPrice (maxPriceField);
+
+const titleField = document.querySelector('#title');
+
+titleMinMax(titleField); 
