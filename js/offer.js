@@ -13,7 +13,6 @@ const Typesrussian = [
   'Бунгало',
 ]
 
-
 const offerPopUp = (fakeElement => {
   const offerElement = offerTemplate.cloneNode(true);
   offerElement.querySelector('.popup__title').textContent = fakeElement.offer.title;
