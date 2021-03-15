@@ -13,7 +13,6 @@ L.tileLayer(
   },
 ).addTo(map);
 
-//active
 const form = document.querySelector('.ad-form');
 const mapFilter = document.querySelector('.map__filters');
 
@@ -24,7 +23,6 @@ mapFilter.classList.remove('map__filters--disabled');
 form.childNodes.forEach (formChild => formChild.disabled = false);
 mapFilter.childNodes.forEach (formChild => formChild.disabled = false);
 const address = document.querySelector('#address');
-/* address.disabled = true; */
 address.value = '35.68625, 139.76107';
 const mainPinIcon = L.icon({
   iconUrl: './img/main-pin.svg',
