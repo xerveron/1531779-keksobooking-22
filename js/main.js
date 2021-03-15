@@ -1,5 +1,5 @@
 
-import {changePriceOfType, eventBothChange, forceMaxPrice, titleMinMax} from './form.js';
+import {changePriceOfType, eventBothChange, priceValidity, titleMinMax,setRoomsForGuests} from './form.js';
 
 const form = document.querySelector('.ad-form');
 const mapFilter = document.querySelector('.map__filters');
@@ -11,10 +11,11 @@ mapFilter.classList.add('map__filters--disabled');
 form.childNodes.forEach (formChild => formChild.disabled = true);
 mapFilter.childNodes.forEach (formChild => formChild.disabled = true);
 
-const dropDownType = document.querySelector('#type');
+const selectType = document.querySelector('#type');
 const inputPrice = document.querySelector('#price');
 
-changePriceOfType(dropDownType, inputPrice);
+changePriceOfType(selectType, inputPrice);
+priceValidity (selectType, inputPrice);
 
 const timeIn = document.querySelector('#timein');
 const timeOut = document.querySelector('#timeout');
@@ -24,11 +25,14 @@ eventBothChange (timeIn,timeOut);
 const numOfGuests = document.querySelector('#capacity');
 const numOfRooms = document.querySelector('#room_number');
 
-eventBothChange (numOfGuests,numOfRooms);
 
-const maxPriceField = document.querySelector('#price');
+setRoomsForGuests (numOfGuests,numOfRooms)
+/* eventBothChange (numOfGuests,numOfRooms); */
 
-forceMaxPrice (maxPriceField);
+
+
+
+
 
 const titleField = document.querySelector('#title');
 
