@@ -13,7 +13,6 @@ L.tileLayer(
   },
 ).addTo(map);
 
-//active
 const form = document.querySelector('.ad-form');
 const mapFilter = document.querySelector('.map__filters');
 
@@ -24,8 +23,7 @@ mapFilter.classList.remove('map__filters--disabled');
 form.childNodes.forEach (formChild => formChild.disabled = false);
 mapFilter.childNodes.forEach (formChild => formChild.disabled = false);
 const address = document.querySelector('#address');
-address.disabled = true;
-
+address.value = '35.68625, 139.76107';
 const mainPinIcon = L.icon({
   iconUrl: './img/main-pin.svg',
   iconSize: [52, 52],
@@ -46,7 +44,7 @@ const mainPinMarker = L.marker(
 mainPinMarker.addTo(map);
 
 mainPinMarker.on('moveend', (evt) => {
-  address.value = 'Широта = ' + evt.target.getLatLng()['lat'].toFixed(4) + '; Долгота = ' + evt.target.getLatLng()['lng'].toFixed(4);
+  address.value = evt.target.getLatLng()['lat'].toFixed(5)+', '+evt.target.getLatLng()['lng'].toFixed(5);
 });
 
 fakeData.forEach (fakeElement => {
