@@ -1,10 +1,15 @@
-import {offerPopUp, fakeData} from './offer.js';
+import {offerPopUp} from './offer.js';
+import {createFetch} from './fetch.js'
+
+const LAT_TOKIO = 35.68625;
+const LNG_TOKIO = 139.76107;
+const MAP_ZOOM = 8;
 
 const map = L.map('map-canvas')
   .setView({
-    lat: 35.68625,
-    lng: 139.76107,
-  }, 12);
+    lat: LAT_TOKIO,
+    lng: LNG_TOKIO,
+  }, MAP_ZOOM);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -23,7 +28,7 @@ mapFilter.classList.remove('map__filters--disabled');
 form.childNodes.forEach (formChild => formChild.disabled = false);
 mapFilter.childNodes.forEach (formChild => formChild.disabled = false);
 const address = document.querySelector('#address');
-address.value = '35.68625, 139.76107';
+address.value = LAT_TOKIO + ', ' + LNG_TOKIO;
 const mainPinIcon = L.icon({
   iconUrl: './img/main-pin.svg',
   iconSize: [52, 52],
@@ -32,8 +37,8 @@ const mainPinIcon = L.icon({
 
 const mainPinMarker = L.marker(
   {
-    lat: 35.68625,
-    lng: 139.76107,
+    lat: LAT_TOKIO,
+    lng: LNG_TOKIO,
   },
   {
     draggable: true,
@@ -47,27 +52,28 @@ mainPinMarker.on('moveend', (evt) => {
   address.value = evt.target.getLatLng()['lat'].toFixed(5)+', '+evt.target.getLatLng()['lng'].toFixed(5);
 });
 
-fakeData.forEach (fakeElement => {
+createFetch().then((value) =>
 
-  const lat = fakeElement.location.x;
-  const lng = fakeElement.location.y;
-  const icon = L.icon ({
-    iconUrl: './img//pin.svg',
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  })
-  const marker = L.marker ({
-    lat,
-    lng,
-  },
-  {
-    icon,
-  },
-  )
+  value.forEach (serverElement => {
+    const lat = serverElement.location.lat;
+    const lng = serverElement.location.lng;
+    const icon = L.icon ({
+      iconUrl: './img//pin.svg',
+      iconSize: [40, 40],
+      iconAnchor: [20, 40],
+    })
+    const marker = L.marker ({
+      lat,
+      lng,
+    },
+    {
+      icon,
+    },
+    )
   
-  marker
-    .addTo(map)
-    .bindPopup(
-      offerPopUp(fakeElement),
-    );
-})
+    marker
+      .addTo(map)
+      .bindPopup(
+        offerPopUp(serverElement),
+      );
+  }));

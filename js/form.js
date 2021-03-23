@@ -1,25 +1,25 @@
 import {dropDownChange} from './util.js';
 import {Types} from './data.js';
 
-const Prices = [
-  '0',
-  '1000',
-  '5000',
-  '10000',
-];
+const Prices = {
+  bungalow:'0',
+  flat:'1000',
+  house:'5000',
+  palace:'10000',
+};
 
 const MAX_PRICE = 1000000;
 
 const changePriceOfType = (select, input) => {
   select.addEventListener('change', () => {
-    if (select.value === Types[3]) {
-      dropDownChange(input, Prices[0]);
-    } else if (select.value === Types[1]) {
-      dropDownChange(input, Prices[1]);
-    } else if (select.value === Types[2]) {
-      dropDownChange(input, Prices[2]);
+    if (select.value === Types.bungalow) {
+      dropDownChange(input, Prices.bungalow);
+    } else if (select.value === Types.flat) {
+      dropDownChange(input, Prices.flat);
+    } else if (select.value === Types.house) {
+      dropDownChange(input, Prices.house);
     } else {
-      dropDownChange(input, Prices[3]);
+      dropDownChange(input, Prices.palace);
     }
   });
 };
@@ -28,12 +28,12 @@ const priceValidity = (selectType,inputPrice) => {
   inputPrice.addEventListener ('input', () => {
     if (inputPrice.value > MAX_PRICE) {
       inputPrice.setCustomValidity ('Цена не может быть выше '+MAX_PRICE+' рублей!');
-    } else if (selectType.value==Types[0] && inputPrice.value<parseInt(Prices[3])) {
-      inputPrice.setCustomValidity ('Нужно больше золота (мин '+Prices[3]+')')
-    } else if (selectType.value==Types[2] && inputPrice.value<parseInt(Prices[2])) {
-      inputPrice.setCustomValidity ('Нужно больше золота (мин '+Prices[2]+')')
-    } else if (selectType.value==Types[1] && inputPrice.value<parseInt(Prices[1])) {
-      inputPrice.setCustomValidity ('Нужно больше золота (мин '+Prices[1]+')')
+    } else if (selectType.value==Types.palace && inputPrice.value<parseInt(Prices.palace)) {
+      inputPrice.setCustomValidity ('Нужно больше золота (мин '+Prices.palace+')')
+    } else if (selectType.value==Types.house && inputPrice.value<parseInt(Prices.house)) {
+      inputPrice.setCustomValidity ('Нужно больше золота (мин '+Prices.house+')')
+    } else if (selectType.value==Types.flat && inputPrice.value<parseInt(Prices.flat)) {
+      inputPrice.setCustomValidity ('Нужно больше золота (мин '+Prices.flat+')')
     } else {inputPrice.setCustomValidity ('');}
     inputPrice.reportValidity();
   });
@@ -44,8 +44,10 @@ const makePreparationRoomsGuests = (a,guests,rooms,text) => {
     if (rooms.value==100 && guests.value>0) {
       let nameOfGuests=(guests.value>1) ? 'гостей' : 'гостя';
       a.setCustomValidity ('100 комнат для '+guests.value+' '+nameOfGuests+' слишком много');
-    } else if ((rooms.value<100 && guests.value==0) || (rooms.value==1 && guests.value>1) || (rooms.value==2 && guests.value>2)) {
+    } else if ((rooms.value==1 && guests.value>1) || (rooms.value==2 && guests.value>2)) {
       a.setCustomValidity (text);
+    } else if ((rooms.value<100 && guests.value==0)) {
+      a.setCustomValidity ('Нужно больше комнат!');
     } else  {
       guests.setCustomValidity ('');
       rooms.setCustomValidity ('');}
@@ -55,7 +57,7 @@ const makePreparationRoomsGuests = (a,guests,rooms,text) => {
 
 const setRoomsForGuests = (guests,rooms) => {
   
-  makePreparationRoomsGuests (rooms,guests,rooms,'Нужно больше гостей!');
+  makePreparationRoomsGuests (rooms,guests,rooms,'Нужно меньше гостей!');
   makePreparationRoomsGuests (guests,guests,rooms,'Нужно больше комнат!');
 }
 

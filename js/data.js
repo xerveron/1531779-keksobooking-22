@@ -1,11 +1,11 @@
 import {getRandomFloatNumber, getRandomNumber, getRandomForReduce} from './util.js';
 
-const Types = [
-  'palace',
-  'flat',
-  'house',
-  'bungalow',
-];
+const Types = {
+  bungalow:'bungalow',
+  flat:'flat',
+  house:'house',
+  palace:'palace',
+};
 
 const Adjs = [
   'Nice',
