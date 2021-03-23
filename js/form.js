@@ -1,5 +1,8 @@
-import {dropDownChange} from './util.js';
+import {dropDownChange,sendError,sendSuccess} from './util.js';
 import {Types} from './data.js';
+
+const LAT_TOKIO = 35.68625;
+const LNG_TOKIO = 139.76107;
 
 const Prices = {
   bungalow:'0',
@@ -88,6 +91,39 @@ const titleMinMax = (inputField) => {
     inputField.reportValidity();
   });
 }
+
+const adForm = document.querySelector('.ad-form');
+
+const address = document.querySelector('#address');
+
+adForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  const formData = new FormData (evt.target);
+
+  fetch(
+    'https://22.javascript.pages.academy/keksobooking',
+    {
+      method: 'POST',
+      body: formData,
+    },
+  )
+    .then((response) => {
+      if (response.ok) {
+        return response.json()
+      }
+      throw new Error(`${response.status} ${response.statusText}`);
+    })
+    
+    .then((result) => {
+      sendSuccess();
+      adForm.reset();
+      address.value = LAT_TOKIO + ', ' + LNG_TOKIO;
+    })
+    .catch(() => {
+      sendError ('Ошибка размещения объявления', 'Попробовать снова');
+    });
+} );
+
 
 export {changePriceOfType, eventBothChange, priceValidity,titleMinMax, setRoomsForGuests};
 

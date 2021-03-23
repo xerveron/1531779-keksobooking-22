@@ -28,6 +28,7 @@ mapFilter.classList.remove('map__filters--disabled');
 form.childNodes.forEach (formChild => formChild.disabled = false);
 mapFilter.childNodes.forEach (formChild => formChild.disabled = false);
 const address = document.querySelector('#address');
+address.readOnly = true;
 address.value = LAT_TOKIO + ', ' + LNG_TOKIO;
 const mainPinIcon = L.icon({
   iconUrl: './img/main-pin.svg',
@@ -77,3 +78,18 @@ createFetch().then((value) =>
         offerPopUp(serverElement),
       );
   }));
+
+const adForm = document.querySelector('.ad-form');
+const clearFormButton = document.querySelector('.ad-form__reset');
+const clearForm = (form) => {
+  form.reset();
+  let newMainPinCoordinates = new L.LatLng (LAT_TOKIO, LNG_TOKIO)
+  mainPinMarker.setLatLng (newMainPinCoordinates);
+  address.value = LAT_TOKIO + ', ' + LNG_TOKIO;
+}
+clearFormButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  clearForm (adForm)
+});
+
+export{clearForm};
