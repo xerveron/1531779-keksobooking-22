@@ -1,6 +1,9 @@
 
 import {changePriceOfType, eventBothChange, priceValidity, titleMinMax,setRoomsForGuests} from './form.js';
 
+
+
+
 const form = document.querySelector('.ad-form');
 const mapFilter = document.querySelector('.map__filters');
 
@@ -27,7 +30,9 @@ const numOfRooms = document.querySelector('#room_number');
 
 
 setRoomsForGuests (numOfGuests,numOfRooms)
-/* eventBothChange (numOfGuests,numOfRooms); */
+
+
+
 
 
 

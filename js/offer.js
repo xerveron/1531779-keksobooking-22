@@ -1,36 +1,36 @@
-import {createFakeData, Types} from './data.js';
+import {Types} from './data.js';
 
-const fakeData = new Array(10).fill(null).map(() => createFakeData());
-
+/* const fakeData = new Array(10).fill(null).map(() => createFakeData());
+ */
 const offerTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
 
-const Typesrussian = [
-  'Дворец',
-  'Квартира',
-  'Дом',
-  'Бунгало',
-]
+const Typesrussian = {
+  palace:'Дворец',
+  flat:'Квартира',
+  house:'Дом',
+  bungalow:'Бунгало',
+}
 
 const offerPopUp = (fakeElement => {
   const offerElement = offerTemplate.cloneNode(true);
   offerElement.querySelector('.popup__title').textContent = fakeElement.offer.title;
   offerElement.querySelector('.popup__text--address').textContent = fakeElement.offer.address;
   offerElement.querySelector('.popup__text--price').textContent = fakeElement.offer.price + ' ₽/ночь';
-  offerElement.querySelector('.popup__type').textContent = (fakeElement.offer.type===Types[0]) ? Typesrussian[0]:
-    (fakeElement.offer.type===Types[1]) ? Typesrussian[1]:
-      (fakeElement.offer.type===Types[2]) ? Typesrussian[2]:
-        Typesrussian[3];
+  offerElement.querySelector('.popup__type').textContent = (fakeElement.offer.type===Types.palace) ? Typesrussian.palace:
+    (fakeElement.offer.type===Types.flat) ? Typesrussian.flat:
+      (fakeElement.offer.type===Types.house) ? Typesrussian.house:
+        Typesrussian.bungalow;
   offerElement.querySelector('.popup__text--capacity').textContent = fakeElement.offer.rooms + ' комнаты для ' + fakeElement.offer.guests + ' гостей';
   offerElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + fakeElement.offer.checkin + ', выезд до ' + fakeElement.offer.checkout;
-  if (fakeElement.offer.features === undefined || fakeElement.offer.photo.features == 0) {
+  if (fakeElement.offer.features === undefined) {
     offerElement.querySelector('.popup__features').classList.add('hidden');
   } else {
     offerElement.querySelector('.popup__features').textContent = fakeElement.offer.features;
   }
   offerElement.querySelector('.popup__description').textContent = fakeElement.offer.description;
-  if (fakeElement.offer.photo === undefined || fakeElement.offer.photo.length == 0) {
+  if (fakeElement.offer.photo === undefined || fakeElement.offer.photos.length == 0) {
     offerElement.querySelector('.popup__photos').classList.add('hidden');
   } else {
     offerElement.querySelector('.popup__photos').innerHTML='';
@@ -44,4 +44,4 @@ const offerPopUp = (fakeElement => {
   return offerElement;
 })
 
-export {offerPopUp,fakeData};
+export {offerPopUp/* ,fakeData */};
