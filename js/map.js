@@ -1,18 +1,16 @@
 /* global L:readonly */
+/* global _:readonly */
 import {offerPopUp} from './offer.js';
 import {createFetch} from './fetch.js';
 import {filterChecked,filterEasyTypes,filterPrice} from './filter.js';
 
-const TOKIO = {
+const Tokio = {
   LAT:35.68625,
   LNG:139.76107,
 }
-
 const MAP_ZOOM = 8;
 const MARKER_NUMBER = 10;
-
 const map = L.map('map-canvas');
-
 const mainPinIcon = L.icon({
   iconUrl: './img/main-pin.svg',
   iconSize: [52, 52],
@@ -21,8 +19,8 @@ const mainPinIcon = L.icon({
 
 const mainPinMarker = L.marker(
   {
-    lat: TOKIO.LAT,
-    lng: TOKIO.LNG,
+    lat: Tokio.LAT,
+    lng: Tokio.LNG,
   },
   {
     draggable: true,
@@ -30,12 +28,15 @@ const mainPinMarker = L.marker(
   },
 )
 
+const DEBOUNCE_TIMEOUT = 500;
+const filterForm = document.querySelector('.map__filters');
+
 let filterMarkers = [];
 
 const loadMap = (map) => {
   map.setView({
-    lat: TOKIO.LAT,
-    lng: TOKIO.LNG,
+    lat: Tokio.LAT,
+    lng: Tokio.LNG,
   }, MAP_ZOOM);
 
   L.tileLayer(
@@ -56,7 +57,7 @@ const renderMainPin = (mainPinMarker) => {
   });
 }
 
-const renderMapMarkers = (filterMarkers) => {
+const renderMapMarkers = () => {
   let i=0;
   createFetch()
     .then((value) =>
@@ -121,4 +122,14 @@ const renderMapMarkers = (filterMarkers) => {
     );
 };
 
-export{map,loadMap,TOKIO,renderMainPin,mainPinMarker,filterMarkers,renderMapMarkers};
+const filterMapMarkers = () => {
+  filterForm.addEventListener('change', () => {
+    for (let i=0;i<filterMarkers.length;i++) {
+      map.removeLayer (filterMarkers[i]);
+    }
+    const debounceRenderMapMarkers = _.debounce(()=> {renderMapMarkers(filterMarkers)},DEBOUNCE_TIMEOUT);
+    debounceRenderMapMarkers();
+  })
+}
+
+export{map,loadMap,Tokio,renderMainPin,mainPinMarker,filterMapMarkers,renderMapMarkers};

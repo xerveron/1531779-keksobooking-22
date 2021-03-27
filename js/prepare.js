@@ -1,5 +1,5 @@
 
-import {loadMap,map,renderMainPin,renderMapMarkers,mainPinMarker,filterMarkers} from './map.js';
+import {loadMap,map,renderMainPin,renderMapMarkers,mainPinMarker} from './map.js';
 import {setDefaultAddress} from './form.js'
 
 const form = document.querySelector('.ad-form');
@@ -28,7 +28,7 @@ const preparePage = () => {
   map.on ('load', enableFormFilter());
   setDefaultAddress();
   renderMainPin(mainPinMarker);
-  renderMapMarkers(filterMarkers);
+  renderMapMarkers();
 }
 
 export {preparePage};

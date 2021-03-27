@@ -1,27 +1,28 @@
 import {dropDownChange,sendError,sendSuccess} from './util.js';
 import {Types} from './offer.js';
-import {TOKIO,mainPinMarker} from './map.js'
+import {Tokio,mainPinMarker} from './map.js'
 
 
-const PRICES = {
+const Prices = {
   bungalow:'0',
   flat:'1000',
   house:'5000',
   palace:'10000',
 };
-
 const MAX_PRICE = 1000000;
+const MIN_TITLE_LENGTH = 30;
+const MAX_TITLE_LENGTH = 100;
 
 const changePriceOfType = (select, input) => {
   select.addEventListener('change', () => {
     if (select.value === Types.bungalow) {
-      dropDownChange(input, PRICES.bungalow);
+      dropDownChange(input, Prices.bungalow);
     } else if (select.value === Types.flat) {
-      dropDownChange(input, PRICES.flat);
+      dropDownChange(input, Prices.flat);
     } else if (select.value === Types.house) {
-      dropDownChange(input, PRICES.house);
+      dropDownChange(input, Prices.house);
     } else {
-      dropDownChange(input, PRICES.palace);
+      dropDownChange(input, Prices.palace);
     }
   });
 };
@@ -30,12 +31,12 @@ const priceValidity = (selectType,inputPrice) => {
   inputPrice.addEventListener ('input', () => {
     if (inputPrice.value > MAX_PRICE) {
       inputPrice.setCustomValidity ('Цена не может быть выше '+MAX_PRICE+' рублей!');
-    } else if (selectType.value==Types.palace && inputPrice.value<parseInt(PRICES.palace)) {
-      inputPrice.setCustomValidity ('Нужно больше золота (мин '+PRICES.palace+')')
-    } else if (selectType.value==Types.house && inputPrice.value<parseInt(PRICES.house)) {
-      inputPrice.setCustomValidity ('Нужно больше золота (мин '+PRICES.house+')')
-    } else if (selectType.value==Types.flat && inputPrice.value<parseInt(PRICES.flat)) {
-      inputPrice.setCustomValidity ('Нужно больше золота (мин '+PRICES.flat+')')
+    } else if (selectType.value===Types.palace && inputPrice.value<parseInt(Prices.palace)) {
+      inputPrice.setCustomValidity ('Нужно больше золота (мин '+Prices.palace+')')
+    } else if (selectType.value===Types.house && inputPrice.value<parseInt(Prices.house)) {
+      inputPrice.setCustomValidity ('Нужно больше золота (мин '+Prices.house+')')
+    } else if (selectType.value===Types.flat && inputPrice.value<parseInt(Prices.flat)) {
+      inputPrice.setCustomValidity ('Нужно больше золота (мин '+Prices.flat+')')
     } else {inputPrice.setCustomValidity ('');}
     inputPrice.reportValidity();
   });
@@ -43,12 +44,12 @@ const priceValidity = (selectType,inputPrice) => {
 
 const makePreparationRoomsGuests = (a,guests,rooms,text) => {
   a.addEventListener ('change', () => {
-    if (rooms.value==100 && guests.value>0) {
+    if (rooms.value===100 && guests.value>0) {
       let nameOfGuests=(guests.value>1) ? 'гостей' : 'гостя';
       a.setCustomValidity ('100 комнат для '+guests.value+' '+nameOfGuests+' слишком много');
-    } else if ((rooms.value==1 && guests.value>1) || (rooms.value==2 && guests.value>2)) {
+    } else if ((rooms.value===1 && guests.value>1) || (rooms.value===2 && guests.value>2)) {
       a.setCustomValidity (text);
-    } else if ((rooms.value<100 && guests.value==0)) {
+    } else if ((rooms.value<100 && guests.value===0)) {
       a.setCustomValidity ('Нужно больше комнат!');
     } else  {
       guests.setCustomValidity ('');
@@ -74,8 +75,6 @@ const eventBothChange = (a, b) => {
   eventChange (b,a);
 };
 
-const MIN_TITLE_LENGTH = 30;
-const MAX_TITLE_LENGTH = 100;
 
 const titleMinMax = (inputField) => { 
   inputField.addEventListener ('input', () => {
@@ -98,7 +97,7 @@ const address = document.querySelector('#address');
 
 const setDefaultAddress = () => {
   address.readOnly = true;
-  address.value = TOKIO.LAT + ', ' + TOKIO.LNG;
+  address.value = Tokio.LAT + ', ' + Tokio.LNG;
 }
 
 adForm.addEventListener('submit', (evt) => {
@@ -122,7 +121,7 @@ adForm.addEventListener('submit', (evt) => {
     .then((result) => {
       sendSuccess();
       adForm.reset();
-      address.value = TOKIO.LAT + ', ' + TOKIO.LNG;
+      address.value = Tokio.LAT + ', ' + Tokio.LNG;
     })
     .catch(() => {
       sendError ('Ошибка размещения объявления', 'Попробовать снова');
@@ -131,9 +130,9 @@ adForm.addEventListener('submit', (evt) => {
 
 const clearForm = (form) => {
   form.reset();
-  let newMainPinCoordinates = new L.LatLng (TOKIO.LAT, TOKIO.LNG)
+  let newMainPinCoordinates = new L.LatLng (Tokio.LAT, Tokio.LNG)
   mainPinMarker.setLatLng (newMainPinCoordinates);
-  address.value = TOKIO.LAT + ', ' + TOKIO.LNG;
+  address.value = Tokio.LAT + ', ' + Tokio.LNG;
 }
 const clearFormButton = () => {
   clearButton.addEventListener('click', (evt) => {
