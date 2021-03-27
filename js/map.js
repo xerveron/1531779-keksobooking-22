@@ -1,5 +1,7 @@
+/* global L:readonly */
 import {offerPopUp} from './offer.js';
-import {createFetch} from './fetch.js'
+import {createFetch} from './fetch.js';
+import {filterChecked,filterEasyTypes,filterPrice} from './filter.js';
 
 const TOKIO = {
   LAT:35.68625,
@@ -62,9 +64,34 @@ const renderMapMarkers = (filterMarkers) => {
       value
         .slice()
         .filter(element => { 
-          if (element.offer.type==document.querySelector('#housing-type').value || document.querySelector('#housing-type').value=='any') {
-            return element;
-          }
+          return filterEasyTypes(element,'type');
+        })
+        .filter(element => {
+          return filterEasyTypes(element,'rooms');
+        })
+        .filter(element => {
+          return filterEasyTypes(element,'guests');
+        })
+        .filter(element => {
+          return filterPrice(element);
+        })
+        .filter(element => {
+          return filterChecked(element,'wifi');
+        })
+        .filter(element => {
+          return filterChecked(element,'dishwasher');
+        })
+        .filter(element => {
+          return filterChecked(element,'parking');
+        })
+        .filter(element => {
+          return filterChecked(element,'washer');
+        })
+        .filter(element => {
+          return filterChecked(element,'elevator');
+        })
+        .filter(element => {
+          return filterChecked(element,'conditioner');
         })
         .slice(0,MARKER_NUMBER)
         .forEach (serverElement => {
