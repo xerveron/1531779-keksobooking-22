@@ -1,18 +1,11 @@
 
-import {changePriceOfType, eventBothChange, priceValidity, titleMinMax,setRoomsForGuests} from './form.js';
+import {changePriceOfType, eventBothChange, priceValidity, titleMinMax,setRoomsForGuests,clearFormButton} from './form.js';
+import {preparePage} from './prepare.js'
+import {filterMapMarkers} from './filter.js';
 
-
-
-
-const form = document.querySelector('.ad-form');
-const mapFilter = document.querySelector('.map__filters');
-
-
-form.classList.add('ad-form--disabled');
-mapFilter.classList.add('map__filters--disabled');
-
-form.childNodes.forEach (formChild => formChild.disabled = true);
-mapFilter.childNodes.forEach (formChild => formChild.disabled = true);
+preparePage();
+filterMapMarkers();
+clearFormButton();
 
 const selectType = document.querySelector('#type');
 const inputPrice = document.querySelector('#price');
@@ -30,13 +23,6 @@ const numOfRooms = document.querySelector('#room_number');
 
 
 setRoomsForGuests (numOfGuests,numOfRooms)
-
-
-
-
-
-
-
 
 
 const titleField = document.querySelector('#title');
