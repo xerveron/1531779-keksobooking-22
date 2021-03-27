@@ -1,7 +1,10 @@
-import {Types} from './data.js';
+const Types = {
+  bungalow:'bungalow',
+  flat:'flat',
+  house:'house',
+  palace:'palace',
+};
 
-/* const fakeData = new Array(10).fill(null).map(() => createFakeData());
- */
 const offerTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
@@ -44,4 +47,4 @@ const offerPopUp = (fakeElement => {
   return offerElement;
 })
 
-export {offerPopUp/* ,fakeData */};
+export {offerPopUp, Types};
