@@ -28,10 +28,11 @@ const mainPinMarker = L.marker(
   },
 )
 
-const DEBOUNCE_TIMEOUT = 500;
+const DEBOUNCE_TIMEOUT = 1000;
 const filterForm = document.querySelector('.map__filters');
 
 let filterMarkers = [];
+const serverData = []
 
 const loadMap = (map) => {
   map.setView({
@@ -57,14 +58,15 @@ const renderMainPin = (mainPinMarker) => {
   });
 }
 
-const renderMapMarkers = () => {
+const getServerData = (serverData) => {
   let i=0;
+  let j=0;
   createFetch()
-    .then((value) =>
+    .then((value) =>  {
 
       value
         .slice()
-        .filter(element => { 
+        /* .filter(element => { 
           return filterEasyTypes(element,'type');
         })
         .filter(element => {
@@ -94,8 +96,14 @@ const renderMapMarkers = () => {
         .filter(element => {
           return filterChecked(element,'conditioner');
         })
-        .slice(0,MARKER_NUMBER)
+        .slice(0,MARKER_NUMBER) */
         .forEach (serverElement => {
+          console.log (serverElement);
+          serverData[j] = serverElement;
+          j++;
+          console.log (serverData);
+        });
+      /* .forEach (serverElement => {
           const lat = serverElement.location.lat;
           const lng = serverElement.location.lng;
           const icon = L.icon ({
@@ -118,18 +126,33 @@ const renderMapMarkers = () => {
               offerPopUp(serverElement),
             );
           i++;
-        }),
-    );
+        }), */
+    });
+  console.log (serverData);
+  return serverData;
 };
 
+let serverDataArray = [];
+
+const filterServerData = async () => {
+  let serverData=[];
+  await getServerData(serverData);
+  await console.log (serverData);
+  await console.log (serverData[0])
+  
+};
+
+filterServerData(serverDataArray);
+
+/* const debounceRenderMapMarkers = _.debounce(()=> {renderMapMarkers(filterMarkers)},DEBOUNCE_TIMEOUT);
+ */
 const filterMapMarkers = () => {
   filterForm.addEventListener('change', () => {
     for (let i=0;i<filterMarkers.length;i++) {
       map.removeLayer (filterMarkers[i]);
     }
-    const debounceRenderMapMarkers = _.debounce(()=> {renderMapMarkers(filterMarkers)},DEBOUNCE_TIMEOUT);
     debounceRenderMapMarkers();
   })
 }
 
-export{map,loadMap,Tokio,renderMainPin,mainPinMarker,filterMapMarkers,renderMapMarkers};
+export{map,loadMap,Tokio,renderMainPin,mainPinMarker,filterMapMarkers,filterServerData};
