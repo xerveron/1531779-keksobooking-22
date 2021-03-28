@@ -14,7 +14,7 @@ const filterForm = document.querySelector('.map__filters');
 let filterMarkers = [];
 
 const filterEasyTypes = (element,i) => {
-  if (i===HOUSING_FILTERS.length) {return true};
+  if (i===HOUSING_FILTERS.length) {return true}
   const filterElement = document.querySelector('#housing-' + HOUSING_FILTERS[i]).value;
   if (element.offer[HOUSING_FILTERS[i]].toString()===filterElement.toString() || filterElement.toString()==='any') {
     return filterEasyTypes (element,i+1);
@@ -27,7 +27,7 @@ const filterPrice = (element) => {
   }
 };
 const filterChecked = (element,i) => {
-  if (i===FILTER_FEATURES.length) {return true};
+  if (i===FILTER_FEATURES.length) {return true}
   const filterElement = document.querySelector('#filter-' + FILTER_FEATURES[i]);
   if ((filterElement.checked && element.offer.features.includes(FILTER_FEATURES[i])) || (!filterElement.checked)) {
     return filterChecked(element,i+1);
