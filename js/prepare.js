@@ -1,6 +1,9 @@
 
-import {loadMap,map,renderMainPin,mainPinMarker, filterServerData} from './map.js';
-import {setDefaultAddress} from './form.js'
+import {loadMap,map,renderMainPin,mainPinMarker} from './map.js';
+import {setDefaultAddress} from './form.js';
+import {filterServerData} from './filter.js';
+
+let serverDataArray = [];
 
 const form = document.querySelector('.ad-form');
 const mapFilter = document.querySelector('.map__filters');
@@ -27,9 +30,8 @@ const preparePage = () => {
   loadMap(map);
   map.on ('load', enableFormFilter());
   setDefaultAddress();
-  renderMainPin(mainPinMarker);/* 
-  filterServerData(); */
-  /* renderMapMarkers() */;
+  renderMainPin(mainPinMarker);
+  filterServerData (serverDataArray);
 }
 
 export {preparePage};

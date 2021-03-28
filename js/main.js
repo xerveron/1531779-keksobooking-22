@@ -1,7 +1,6 @@
 
 import {changePriceOfType, eventBothChange, priceValidity, titleMinMax,setRoomsForGuests,clearFormButton,submitAdForm} from './form.js';
 import {preparePage} from './prepare.js'
-import {filterMapMarkers} from './map.js';
 
 const selectType = document.querySelector('#type');
 const inputPrice = document.querySelector('#price');
@@ -12,7 +11,6 @@ const numOfRooms = document.querySelector('#room_number');
 const titleField = document.querySelector('#title');
 
 preparePage();
-filterMapMarkers();
 clearFormButton();
 changePriceOfType(selectType, inputPrice);
 priceValidity (selectType, inputPrice);
