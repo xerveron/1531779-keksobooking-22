@@ -53,7 +53,7 @@ const renderMainPin = (mainPinMarker) => {
 
         
 const renderAdMarkers = (serverData,filterMarkers) => {
-let i=0;
+  let i=0;
   serverData.forEach (serverElement => {
     const lat = serverElement.location.lat;
     const lng = serverElement.location.lng;
