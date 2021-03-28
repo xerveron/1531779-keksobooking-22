@@ -17,12 +17,6 @@ const TypesRussian = {
 }
 
 const FeaturesArray = ['wifi','dishwasher','parking','washer','elevator','conditioner'];
-/*   wifi:'wifi',
-  dishwasher:'dishwasher',
-  parking:'parking',
-  washer:'washer',
-  elevator:'elevator',
-  conditioner:'conditioner', */
 
 
 const offerPopUp = (fakeElement => {
