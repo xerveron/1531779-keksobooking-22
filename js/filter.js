@@ -1,7 +1,7 @@
 
 const filterEasyTypes = (element,feature) => {
   const filterElement = document.querySelector('#housing-' + feature).value;
-  if (element.offer[feature]===filterElement || filterElement==='any') {
+  if (element.offer[feature].toString()===filterElement.toString() || filterElement.toString()==='any') {
     return element;
   }
 }

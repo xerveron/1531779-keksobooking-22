@@ -1,5 +1,5 @@
 
-import {changePriceOfType, eventBothChange, priceValidity, titleMinMax,setRoomsForGuests,clearFormButton} from './form.js';
+import {changePriceOfType, eventBothChange, priceValidity, titleMinMax,setRoomsForGuests,clearFormButton,submitAdForm} from './form.js';
 import {preparePage} from './prepare.js'
 import {filterMapMarkers} from './map.js';
 
@@ -17,5 +17,6 @@ clearFormButton();
 changePriceOfType(selectType, inputPrice);
 priceValidity (selectType, inputPrice);
 eventBothChange (timeIn,timeOut);
-setRoomsForGuests (numOfGuests,numOfRooms)
+setRoomsForGuests (numOfGuests,numOfRooms);
 titleMinMax(titleField); 
+submitAdForm();

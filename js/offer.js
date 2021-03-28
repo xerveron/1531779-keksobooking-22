@@ -43,7 +43,7 @@ const offerPopUp = (fakeElement => {
       if (!fakeElement.offer.features.includes(FeaturesArray[i])) {
         offerElement.querySelector('.popup__feature--' + FeaturesArray[i]).classList.add('hidden');
       }
-    };
+    }
   } 
   offerElement.querySelector('.popup__description').textContent = fakeElement.offer.description;
   if (fakeElement.offer.photos.length === 0) {

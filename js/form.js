@@ -1,3 +1,4 @@
+/* global L:readonly */
 import {dropDownChange,sendError,sendSuccess} from './util.js';
 import {Types} from './offer.js';
 import {Tokio,mainPinMarker} from './map.js'
@@ -43,13 +44,14 @@ const priceValidity = (selectType,inputPrice) => {
 };
 
 const makePreparationRoomsGuests = (a,guests,rooms,text) => {
+
   a.addEventListener ('change', () => {
-    if (rooms.value===100 && guests.value>0) {
+    if (parseInt(rooms.value)===100 && parseInt(guests.value)>0) {
       let nameOfGuests=(guests.value>1) ? 'гостей' : 'гостя';
       a.setCustomValidity ('100 комнат для '+guests.value+' '+nameOfGuests+' слишком много');
-    } else if ((rooms.value===1 && guests.value>1) || (rooms.value===2 && guests.value>2)) {
+    } else if ((parseInt(rooms.value)===1 && parseInt(guests.value)>1) || (parseInt(rooms.value)===2 && parseInt(guests.value)>2)) {
       a.setCustomValidity (text);
-    } else if ((rooms.value<100 && guests.value===0)) {
+    } else if ((parseInt(rooms.value)<100 && parseInt(guests.value)===0)) {
       a.setCustomValidity ('Нужно больше комнат!');
     } else  {
       guests.setCustomValidity ('');
@@ -58,8 +60,15 @@ const makePreparationRoomsGuests = (a,guests,rooms,text) => {
   })
 }; 
 
+/* if (parseInt(document.querySelector('#capacity').value)===1 && parseInt(document.querySelector('#room_number').value)===3) {
+  document.querySelector('#capacity').setCustomValidity('Нужно больше комнат!')
+  document.querySelector('#capacity').reportValidity();
+} else {
+  document.querySelector('#capacity').setCustomValidity('')
+} */
+
+
 const setRoomsForGuests = (guests,rooms) => {
-  
   makePreparationRoomsGuests (rooms,guests,rooms,'Нужно меньше гостей!');
   makePreparationRoomsGuests (guests,guests,rooms,'Нужно больше комнат!');
 }
@@ -100,8 +109,7 @@ const setDefaultAddress = () => {
   address.value = Tokio.LAT + ', ' + Tokio.LNG;
 }
 
-adForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
+const renderSubmit = (evt) => { 
   const formData = new FormData (evt.target);
 
   fetch(
@@ -118,7 +126,7 @@ adForm.addEventListener('submit', (evt) => {
       throw new Error(`${response.status} ${response.statusText}`);
     })
     
-    .then((result) => {
+    .then(() => {
       sendSuccess();
       adForm.reset();
       address.value = Tokio.LAT + ', ' + Tokio.LNG;
@@ -126,7 +134,21 @@ adForm.addEventListener('submit', (evt) => {
     .catch(() => {
       sendError ('Ошибка размещения объявления', 'Попробовать снова');
     });
-} );
+} 
+
+const submitAdForm = () => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    if (parseInt(document.querySelector('#capacity').value)===3 && parseInt(document.querySelector('#room_number').value)===1) {
+      document.querySelector('#capacity').setCustomValidity('Нужно больше комнат!')
+      document.querySelector('#capacity').reportValidity();
+    } else {
+      document.querySelector('#capacity').setCustomValidity('');
+      renderSubmit(evt);
+    }
+  });}
+
+
 
 const clearForm = (form) => {
   form.reset();
@@ -142,5 +164,5 @@ const clearFormButton = () => {
 }
 
 
-export {changePriceOfType, eventBothChange, priceValidity,titleMinMax, setRoomsForGuests,setDefaultAddress,clearFormButton};
+export {changePriceOfType, eventBothChange, priceValidity,titleMinMax, setRoomsForGuests,setDefaultAddress,clearFormButton,submitAdForm};
 
