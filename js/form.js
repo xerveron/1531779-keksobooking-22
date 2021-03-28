@@ -111,7 +111,7 @@ const renderSubmit = (evt) => {
   const formData = new FormData (evt.target);
 
   fetch(
-    'https://22.javascript.pages.academy/keksobooking1',
+    'https://22.javascript.pages.academy/keksobooking',
     {
       method: 'POST',
       body: formData,
