@@ -1,64 +1,43 @@
 /* global _:readonly */
+'use strict';
 
 import {createFetch} from './fetch.js';
 import{renderAdMarkers,map} from './map.js';
 
 const MARKER_NUMBER = 10;
 const DEBOUNCE_TIMEOUT = 500;
+const HOUSING_FILTERS = ['type','rooms','guests'];
+const FILTER_FEATURES = ['wifi','dishwasher','parking','washer','elevator','conditioner'];
 const filterForm = document.querySelector('.map__filters');
+
+
 let filterMarkers = [];
 
-const filterEasyTypes = (element,feature) => {
-  const filterElement = document.querySelector('#housing-' + feature).value;
-  if (element.offer[feature].toString()===filterElement.toString() || filterElement.toString()==='any') {
-    return element;
+const filterEasyTypes = (element,i) => {
+  if (i===HOUSING_FILTERS.length) return true;
+  const filterElement = document.querySelector('#housing-' + HOUSING_FILTERS[i]).value;
+  if (element.offer[HOUSING_FILTERS[i]].toString()===filterElement.toString() || filterElement.toString()==='any') {
+    return filterEasyTypes (element,i+1);
   }
 };
 const filterPrice = (element) => {
   const filterElement = document.querySelector('#housing-price').value
   if ((element.offer.price>=50000 && filterElement==='high') || (element.offer.price>=10000 && element.offer.price<50000 && filterElement==='middle') || (element.offer.price<10000 && filterElement==='low') || filterElement==='any') {
-    return element;
+    return true;
   }
 };
-const filterChecked = (element,feature) => {
-  const filterElement = document.querySelector('#filter-' + feature);
-  if ((filterElement.checked && element.offer.features.includes(feature)) || (!filterElement.checked)) {
-    return element;
+const filterChecked = (element,i) => {
+  if (i===FILTER_FEATURES.length) return true;
+  const filterElement = document.querySelector('#filter-' + FILTER_FEATURES[i]);
+  if ((filterElement.checked && element.offer.features.includes(FILTER_FEATURES[i])) || (!filterElement.checked)) {
+    return filterChecked(element,i+1);
   }
 };
 
-const filterData = (Data) => {
-  return Data.filter(element => { 
-    return filterEasyTypes(element,'type');
-  })
-    .filter(element => {
-      return filterEasyTypes(element,'rooms');
-    })
-    .filter(element => {
-      return filterEasyTypes(element,'guests');
-    })
-    .filter(element => {
-      return filterPrice(element);
-    })
-    .filter(element => {
-      return filterChecked(element,'wifi');
-    })
-    .filter(element => {
-      return filterChecked(element,'dishwasher');
-    })
-    .filter(element => {
-      return filterChecked(element,'parking');
-    })
-    .filter(element => {
-      return filterChecked(element,'washer');
-    })
-    .filter(element => {
-      return filterChecked(element,'elevator');
-    })
-    .filter(element => {
-      return filterChecked(element,'conditioner');
-    })
-    .slice(0,MARKER_NUMBER)
+const filterData = (data) => {
+  return data.filter(element => { 
+    return filterEasyTypes(element,0)&&filterPrice(element)&&filterChecked(element,0);
+  }).slice(0,MARKER_NUMBER);
 };
 
 const filterServerData = async (serverDataArray) => {

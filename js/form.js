@@ -1,10 +1,11 @@
 /* global L:readonly */
+'use strict';
 import {dropDownChange,sendError,sendSuccess} from './util.js';
 import {Types} from './offer.js';
 import {Tokio,mainPinMarker} from './map.js'
 
 
-const Prices = {
+const housingPrices = {
   bungalow:'0',
   flat:'1000',
   house:'5000',
@@ -14,30 +15,37 @@ const MAX_PRICE = 1000000;
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 
+const adForm = document.querySelector('.ad-form');
+const filterForm = document.querySelector('.map__filters');
+const clearButton = document.querySelector('.ad-form__reset');
+const address = document.querySelector('#address');
+const guestsInput = document.querySelector('#capacity');
+const roomInput = document.querySelector('#room_number');
+
 const changePriceOfType = (select, input) => {
   select.addEventListener('change', () => {
     if (select.value === Types.bungalow) {
-      dropDownChange(input, Prices.bungalow);
+      dropDownChange(input, housingPrices.bungalow);
     } else if (select.value === Types.flat) {
-      dropDownChange(input, Prices.flat);
+      dropDownChange(input, housingPrices.flat);
     } else if (select.value === Types.house) {
-      dropDownChange(input, Prices.house);
+      dropDownChange(input, housingPrices.house);
     } else {
-      dropDownChange(input, Prices.palace);
+      dropDownChange(input, housingPrices.palace);
     }
   });
 };
 
-const priceValidity = (selectType,inputPrice) => {
+const validatePrice = (selectType,inputPrice) => {
   inputPrice.addEventListener ('input', () => {
     if (inputPrice.value > MAX_PRICE) {
       inputPrice.setCustomValidity ('Цена не может быть выше '+MAX_PRICE+' рублей!');
-    } else if (selectType.value===Types.palace && inputPrice.value<parseInt(Prices.palace)) {
-      inputPrice.setCustomValidity ('Нужно больше золота (мин '+Prices.palace+')')
-    } else if (selectType.value===Types.house && inputPrice.value<parseInt(Prices.house)) {
-      inputPrice.setCustomValidity ('Нужно больше золота (мин '+Prices.house+')')
-    } else if (selectType.value===Types.flat && inputPrice.value<parseInt(Prices.flat)) {
-      inputPrice.setCustomValidity ('Нужно больше золота (мин '+Prices.flat+')')
+    } else if (selectType.value===Types.palace && inputPrice.value<parseInt(housingPrices.palace)) {
+      inputPrice.setCustomValidity ('Нужно больше золота (мин '+housingPrices.palace+')')
+    } else if (selectType.value===Types.house && inputPrice.value<parseInt(housingPrices.house)) {
+      inputPrice.setCustomValidity ('Нужно больше золота (мин '+housingPrices.house+')')
+    } else if (selectType.value===Types.flat && inputPrice.value<parseInt(housingPrices.flat)) {
+      inputPrice.setCustomValidity ('Нужно больше золота (мин '+housingPrices.flat+')')
     } else {inputPrice.setCustomValidity ('');}
     inputPrice.reportValidity();
   });
@@ -66,19 +74,19 @@ const setRoomsForGuests = (guests,rooms) => {
   makePreparationRoomsGuests (guests,guests,rooms,'Нужно больше комнат!');
 }
 
-const eventChange = (a,b) => {
+const changeTogether = (a,b) => {
   a.addEventListener ('input', () => {
     b.value = a.value;
   });
 };
 
-const eventBothChange = (a, b) => {  
-  eventChange(a,b);
-  eventChange (b,a);
+const changeBoth = (a, b) => {  
+  changeTogether(a,b);
+  changeTogether (b,a);
 };
 
 
-const titleMinMax = (inputField) => { 
+const showRemainSymbolTitle = (inputField) => { 
   inputField.addEventListener ('input', () => {
     const valueLength = inputField.value.length;
     if (valueLength < MIN_TITLE_LENGTH) {
@@ -92,10 +100,7 @@ const titleMinMax = (inputField) => {
   });
 }
 
-const adForm = document.querySelector('.ad-form');
-const clearButton = document.querySelector('.ad-form__reset');
 
-const address = document.querySelector('#address');
 
 const setDefaultAddress = () => {
   address.readOnly = true;
@@ -106,7 +111,7 @@ const renderSubmit = (evt) => {
   const formData = new FormData (evt.target);
 
   fetch(
-    'https://22.javascript.pages.academy/keksobooking',
+    'https://22.javascript.pages.academy/keksobooking1',
     {
       method: 'POST',
       body: formData,
@@ -132,30 +137,32 @@ const renderSubmit = (evt) => {
 const submitAdForm = () => {
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    if (parseInt(document.querySelector('#capacity').value)===3 && parseInt(document.querySelector('#room_number').value)===1) {
-      document.querySelector('#capacity').setCustomValidity('Нужно больше комнат!')
-      document.querySelector('#capacity').reportValidity();
+    if (parseInt(guestsInput.value)===3 && parseInt(roomInput.value)===1) {
+      guestsInput.setCustomValidity('Нужно больше комнат!')
+      guestsInput.reportValidity();
     } else {
-      document.querySelector('#capacity').setCustomValidity('');
+      guestsInput.setCustomValidity('');
       renderSubmit(evt);
     }
   });}
 
 
 
-const clearForm = (form) => {
-  form.reset();
+const clearForm = () => {
+  adForm.reset();
+  filterForm.reset();
   let newMainPinCoordinates = new L.LatLng (Tokio.LAT, Tokio.LNG)
   mainPinMarker.setLatLng (newMainPinCoordinates);
   address.value = Tokio.LAT + ', ' + Tokio.LNG;
 }
+
 const clearFormButton = () => {
   clearButton.addEventListener('click', (evt) => {
     evt.preventDefault();
-    clearForm (adForm)
+    clearForm ();
   });
 }
 
 
-export {changePriceOfType, eventBothChange, priceValidity,titleMinMax, setRoomsForGuests,setDefaultAddress,clearFormButton,submitAdForm};
+export {changePriceOfType, changeBoth, validatePrice,showRemainSymbolTitle, setRoomsForGuests,setDefaultAddress,clearFormButton,submitAdForm};
 

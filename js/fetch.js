@@ -1,4 +1,6 @@
+'use strict';
 import {sendError} from './util.js';
+import {enableMapFilter} from './prepare.js';
 
 
 const createFetch = async () => {
@@ -13,6 +15,7 @@ const createFetch = async () => {
     })
     
     .then((result) => {
+      enableMapFilter();
       return result;
     })
     .catch((err) => {

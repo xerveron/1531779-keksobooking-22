@@ -1,5 +1,6 @@
 
-import {changePriceOfType, eventBothChange, priceValidity, titleMinMax,setRoomsForGuests,clearFormButton,submitAdForm} from './form.js';
+'use strict';
+import {changePriceOfType, changeBoth,validatePrice,showRemainSymbolTitle,setRoomsForGuests,clearFormButton,submitAdForm} from './form.js';
 import {preparePage} from './prepare.js'
 
 const selectType = document.querySelector('#type');
@@ -13,8 +14,8 @@ const titleField = document.querySelector('#title');
 preparePage();
 clearFormButton();
 changePriceOfType(selectType, inputPrice);
-priceValidity (selectType, inputPrice);
-eventBothChange (timeIn,timeOut);
+validatePrice (selectType, inputPrice);
+changeBoth (timeIn,timeOut);
 setRoomsForGuests (numOfGuests,numOfRooms);
-titleMinMax(titleField); 
+showRemainSymbolTitle(titleField); 
 submitAdForm();
