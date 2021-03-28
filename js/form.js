@@ -60,13 +60,6 @@ const makePreparationRoomsGuests = (a,guests,rooms,text) => {
   })
 }; 
 
-/* if (parseInt(document.querySelector('#capacity').value)===1 && parseInt(document.querySelector('#room_number').value)===3) {
-  document.querySelector('#capacity').setCustomValidity('Нужно больше комнат!')
-  document.querySelector('#capacity').reportValidity();
-} else {
-  document.querySelector('#capacity').setCustomValidity('')
-} */
-
 
 const setRoomsForGuests = (guests,rooms) => {
   makePreparationRoomsGuests (rooms,guests,rooms,'Нужно меньше гостей!');
